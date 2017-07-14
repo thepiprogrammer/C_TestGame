@@ -58,21 +58,31 @@ void PlayGame()
 
 // loop continually until user gives a vaild guess
 FText getValidGuess() {
-	//get guess input
-	int32 currentTry = BCGame.getCurrentTry();
-	FText Guess = "";
-	std::cout << "Try " << currentTry << ". Enter your guess: ";
-	getline(std::cin, Guess);
+	EGuessStatus Status = EGuessStatus::Invalid_Status;
+	do {
+		//get guess input
+		int32 currentTry = BCGame.getCurrentTry();
+		FText Guess = "";
+		std::cout << "Try " << currentTry << ". Enter your guess: ";
+		getline(std::cin, Guess);
 
-	EGuessStatus Status = BCGame.checkGuessValidity(Guess);
+		Status = BCGame.checkGuessValidity(Guess);
 
-	switch (Status) {
-	case EGuessStatus::Wrong_Length:
-		std::cout << "Please enter a " << BCGame.getHiddenWordLength << " letter word.\n";
-		break;
-	default:
-		return Guess;
-	}
+		switch (Status) {
+		case EGuessStatus::Wrong_Length:
+			std::cout << "Please enter a " << BCGame.getHiddenWordLength() << " letter word.\n";
+			break;
+		case EGuessStatus::Not_Isogram:
+			std::cout << "Please enter an isogram.\n";
+			break;
+		case EGuessStatus::Not_Lowercase:
+			std::cout << "Please enter a lowercase word.\n";
+			break;
+		default:
+			return Guess;
+		}
+		std::cout << std::endl;
+	} while (Status != EGuessStatus::OK);
 }
 
 bool askToPlayAgain() {
