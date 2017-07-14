@@ -32,7 +32,7 @@ public:
 	EGuessStatus checkGuessValidity(FString) const; // TODO more richer return value.
 
 	void Reset(); // TODO make a more rich return value.
-	FBullCowCount SubmitGuess(FString);
+	FBullCowCount SubmitValidGuess(FString);
 
 	// SomeNewType SubmitValidGuess
 
