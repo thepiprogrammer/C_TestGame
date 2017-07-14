@@ -22,8 +22,22 @@ bool FBullCowGame::isGameWon() const {
 	return false;
 }
 
-EWordStatus FBullCowGame::checkGuessValidity(FString) const {
-	return EWordStatus::OK;
+EGuessStatus FBullCowGame::checkGuessValidity(FString Guess) const {
+	if (false) // if the guess isnt an isogram
+	{
+		return EGuessStatus::Not_Isogram;
+	}
+	else if (false) // if the guess isnt all lowercase
+	{
+		return EGuessStatus::Not_Lowercase;
+	} 
+	else if (getHiddenWordLength() != Guess.length()) // if the guess length is wrong
+	{
+		return EGuessStatus::Wrong_Length;
+	}
+	else {
+		return EGuessStatus::OK;
+	}
 }
 // receives a VALID guess,increments turn,a nd returns count
 FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
@@ -42,12 +56,9 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
 			if (Guess[j] == myHiddenWord[i]) {
 				// if they are in the same place
 				if (i == j) {
-					// increment bulls
 					BullCowCount.Bulls++;
 				}
 				else {
-					// else
-						// increment cows
 					BullCowCount.Cows++;
 				}
 			}
