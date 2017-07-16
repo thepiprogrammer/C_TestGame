@@ -1,8 +1,10 @@
 /** 
 This is console executable, which uses BullCow class.
-This acts as the viwo in a MVC pattern, and is responsible for all user interaction. 
+This acts as the view in a MVC pattern, and is responsible for all user interaction. 
 For game logic see the FBullCowGame class.
 */
+
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -10,9 +12,11 @@ For game logic see the FBullCowGame class.
 
 //using namespace std;
 
+// to make enerything unreal friendly
 using FText = std::string;
 using int32 = int;
 
+// function prototypes outside a class
 void printIntro();
 void PlayGame();
 FText getValidGuess();
@@ -30,14 +34,28 @@ int main() {
 	return 0; // exit
 }
 
+// introduces the game
 void printIntro() {
 	//constant expression
 
 	// introduce the game
-	std::cout << "Can you now guess a " << BCGame.getHiddenWordLength() << " letter word I have?\n";
+	std::cout << "Welcome to another game of bulls and cows!\n";
+	std::cout << "Can you now guess a " << BCGame.getHiddenWordLength() << " letter word I have?\n\n";
+
+	std::cout << "    ,           ," << std::endl;
+	std::cout << "   /             \\" << std::endl;
+	std::cout << "  ((__-^^-,-^^-__))" << std::endl;
+	std::cout << "   `-_---' `---_-'" << std::endl;
+	std::cout << "    <__|o` 'o|__>" << std::endl;
+	std::cout << "       \\  `  /" << std::endl;
+	std::cout << "        ): :(" << std::endl;
+	std::cout << "        :o_o:" << std::endl;
+	std::cout << "        \" - \" " << std::endl << std::endl;
+
 	return;
 }
 
+// plays one instance of the game
 void PlayGame()
 {
 	BCGame.Reset();
@@ -66,26 +84,25 @@ FText getValidGuess() {
 	do {
 		//get guess input
 		int32 currentTry = BCGame.getCurrentTry();
-		std::cout << "Try " << currentTry << ". Enter your guess: ";
+		std::cout << "Try " << currentTry << " of " << BCGame.getMaxTries() << ". Enter your guess: ";
 		getline(std::cin, Guess);
 
 		Status = BCGame.checkGuessValidity(Guess);
 
 		switch (Status) {
 		case EGuessStatus::Wrong_Length:
-			std::cout << "Please enter a " << BCGame.getHiddenWordLength() << " letter word.\n";
+			std::cout << "Please enter a " << BCGame.getHiddenWordLength() << " letter word.\n\n";
 			break;
 		case EGuessStatus::Not_Isogram:
-			std::cout << "Please enter an isogram.\n";
+			std::cout << "Please enter an isogram.\n\n";
 			break;
 		case EGuessStatus::Not_Lowercase:
-			std::cout << "Please enter a lowercase word.\n";
+			std::cout << "Please enter a lowercase word.\n\n";
 			break;
 		default:
 			// assume guess is valid
 			break;
 		}
-		std::cout << std::endl;
 	} while (Status != EGuessStatus::OK);
 	return Guess;
 }
@@ -104,9 +121,9 @@ bool askToPlayAgain() {
 
 void PrintGameSummary() {
 	if (BCGame.isGameWon()) {
-		std::cout << "You won!\n";
+		std::cout << "You won! Hurray!! \n\n";
 	}
 	else {
-		std::cout << "Bad luck!\n";
+		std::cout << "Bad luck!\n\n";
 	}
 }

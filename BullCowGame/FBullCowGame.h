@@ -1,8 +1,13 @@
+/**
+This contains the game logic (without any user interaction involved)
+*/
+
 #pragma once
 #include <string>
 
 // never use "using namespace" in header file
 
+// make this UNREAL friendly
 using FString = std::string;
 using int32 = int;
 
@@ -28,9 +33,11 @@ public:
 	int32 getCurrentTry() const;
 	int32 getHiddenWordLength() const;
 	bool isGameWon() const;
-	bool isIsogram(FString) const;
 
-	void Reset(); // TODO make a more rich return value.
+	bool isIsogram(FString) const;
+	bool isLowerCase(FString) const;
+
+	void Reset();
 
 	EGuessStatus checkGuessValidity(FString) const;
 	FBullCowCount SubmitValidGuess(FString);
