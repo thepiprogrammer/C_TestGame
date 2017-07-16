@@ -17,6 +17,7 @@ void printIntro();
 void PlayGame();
 FText getValidGuess();
 bool askToPlayAgain();
+void PrintGameSummary();
 
 FBullCowGame BCGame; // instantiate a game --> here as global instance
 
@@ -45,7 +46,7 @@ void PlayGame()
 	// loop asking for guesses while game is NOT won
 	// NOT game won but still tries remaining
 	while (!BCGame.isGameWon() && BCGame.getCurrentTry() <= maxTries) {
-		FText Guess = getValidGuess(); // TODO make loop checking validity
+		FText Guess = getValidGuess();
 
 		// submit valid guess to game and receive count
 		FBullCowCount BullCowCount = BCGame.SubmitValidGuess(Guess);
@@ -53,7 +54,9 @@ void PlayGame()
 		std::cout << "Bulls = " << BullCowCount.Bulls;
 		std::cout << ". Cows = " << BullCowCount.Cows << std::endl << std::endl;
 	}
-	// TODO summarize game
+
+	PrintGameSummary();
+	return;
 }
 
 // loop continually until user gives a vaild guess
@@ -88,7 +91,7 @@ FText getValidGuess() {
 }
 
 bool askToPlayAgain() {
-	std::cout << "Do you want to play again? ";
+	std::cout << "Do you want to play again with the same hidden word? ";
 	FText response = "";
 	getline(std::cin, response);
 
@@ -96,5 +99,14 @@ bool askToPlayAgain() {
 		return true;
 	} else {
 		return false;
+	}
+}
+
+void PrintGameSummary() {
+	if (BCGame.isGameWon()) {
+		std::cout << "You won!\n";
+	}
+	else {
+		std::cout << "Bad luck!\n";
 	}
 }
